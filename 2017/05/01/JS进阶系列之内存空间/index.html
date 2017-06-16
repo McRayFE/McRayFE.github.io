@@ -6,14 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017 | Hexo</title>
+  <title>JS进阶系列之内存空间 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+  <meta name="description" content="也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS进阶系列之内存空间">
+<meta property="og:url" content="http://yoursite.com/2017/05/01/JS进阶系列之内存空间/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497612400226&di=1f1e748bafbc3003f34c76ae65ba27ce&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D1228970953%2C833518430%26fm%3D214%26gp%3D0.jpg">
+<meta property="og:updated_time" content="2017-06-16T08:44:36.219Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="JS进阶系列之内存空间">
+<meta name="twitter:description" content="也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497612400226&di=1f1e748bafbc3003f34c76ae65ba27ce&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D1228970953%2C833518430%26fm%3D214%26gp%3D0.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -153,103 +159,173 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-JS进阶系列之内存空间" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JS进阶系列之内存空间
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/01/JS进阶系列之内存空间/" class="archive-article-date">
+
+        
+        <a href="/2017/05/01/JS进阶系列之内存空间/" class="archive-article-date">
   	<time datetime="2017-05-01T08:39:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-01</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/01/JS进阶系列之内存空间/">JS进阶系列之内存空间</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1497612400226&amp;di=1f1e748bafbc3003f34c76ae65ba27ce&amp;imgtype=jpg&amp;src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D1228970953%2C833518430%26fm%3D214%26gp%3D0.jpg" alt=""></p>
+<blockquote>
+<p>也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。<a id="more"></a></p>
+</blockquote>
+<h3 id="堆与栈"><a href="#堆与栈" class="headerlink" title="堆与栈"></a>堆与栈</h3><p>与C/C++不同，JavaScript语言没有严格意义上，区分堆与栈，所以我们可以理解为，JavaScript所有的数据都是存放在<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">不过，在某些场景下，我们仍然需要借助堆栈数据结构来处理，所以有必要理解一下这两个数据结构的区别。</div><div class="line">&gt; 栈：也叫做堆栈</div><div class="line"></div><div class="line">栈数据结构的一个特点就是```后进先出```，好比羽毛球盒子，在一头放羽毛球，在另外一头取羽毛球。</div><div class="line">堆数据结构，好比书架上的书，虽然已经按顺序放好了，但是我们只要知道书的名字，就可以对应的取下来，类似于JSON对象中的```key-value```。</div><div class="line"></div><div class="line">### 变量对象与基本数据类型</div><div class="line">JavaScript中的数据类型大致分为，```基本数据类型```与```引用数据类型```，上文提到，JavaScript中所有的数据都是存放在```堆内存```中，但是，这里提到的```变量对象```（在执行上下文创建阶段生成），由于它有特殊的职能，所以在理解上就把它与堆内存单独分开了，如下图所示：</div><div class="line"></div><div class="line">![image.png](http://upload-images.jianshu.io/upload_images/4067575-b8449d5184b1ecb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line">一般```变量对象```里面存放的是```基本数据类型```,包括```Undefined、Null、Boolean、Number、String```,它们到是```按值访问```的。</div><div class="line"></div><div class="line">&lt;pre&gt;&lt;code&gt;</div><div class="line">demo01</div><div class="line">var a  = 20;</div><div class="line">var b  = a;</div><div class="line">b = 30;</div><div class="line">console.log(a);//20</div><div class="line">&lt;/code&gt;&lt;/pre&gt;</div><div class="line">上面这段代码指的是，在变量对象中执行数据复制的时候，其实系统会自动为新的变量分配一个新的值，所以a与b其实已经是完全独立的两个变量，只是值一样而已。</div><div class="line"></div><div class="line">![image.png](http://upload-images.jianshu.io/upload_images/4067575-b3404272eb2bafdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">### 堆内存与引用数据类型</div><div class="line">javascript中的```引用数据类型```是存放在```堆内存```中的，但是不同于```变量对象```，javascript是不允许直接访问堆内存中的数据，所以如果我们要访问引用数据类型的时候，采用的是```按引用访问```，其实就是在```变量对象```中存放了一个指向对象的句柄，可以理解为一个地址，要访问堆内存中的对象，就要通过这个引用句柄来访问，例如上图中的d变量，就是一个指向对象的地址。</div><div class="line"></div><div class="line">&lt;pre&gt;&lt;code&gt;</div><div class="line">demo02</div><div class="line">var m = &#123; a:10,b:20&#125;;</div><div class="line">var n = m;</div><div class="line">n.a = 15;</div><div class="line">console.log(m.a);//15</div><div class="line">&lt;/code&gt;&lt;/pre&gt;</div><div class="line">上面这段代码指的是执行引用类型数据的复制时，在变量对象中会分配一个新的值，来存放新的变量，但是这两个变量的地址是一样的，相当于指向的对象是一样的，所以各自改变对象里面的属性值，会互相影响，如下图</div><div class="line"></div><div class="line"></div><div class="line">![image.png](http://upload-images.jianshu.io/upload_images/4067575-245cd7d0cdd5247c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">### 内存泄漏</div><div class="line">上面讲解了JavaScript中的内存空间，接下来就要讲解，我写这篇文章的初衷，就是我代码中严重的```内存泄漏</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>内存泄漏：就是不再用到的内存，但是没有及时释放，就叫做内存泄漏</p>
+</blockquote>
+<p>有些语言必须手动释放内存，程序员负责内存的管理，例如C语言</p>
+<pre><code>
+char *buffer;
+buffer = (char*) malloc(42);
+//do something with buffer
+free(buffer);
+</code></pre>
+这里<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">那么JavaScript中的垃圾回收机制又是怎么一回事呢？</div><div class="line"></div><div class="line">### 垃圾回收机制</div><div class="line">以前我一直天真的以为，垃圾回收机制就像人工智能一样，会自动帮你识别出不用的内存，然后释放掉，然而真相只有一个</div><div class="line">垃圾回收机制的原理就是，使用```引用计数```法，就是语言引擎有一张“引用表”，保存了内存里面所有的资源的引用次数，就像下面这样</div><div class="line"></div><div class="line">![image.png](http://upload-images.jianshu.io/upload_images/4067575-8d8188cdb5b0dbf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">但是如果一个值不再需要了，引用数却不为0，垃圾回收机制是无法释放这块内存，从而导致```内存泄漏</div></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+例如：
 
+<pre><code>
+const arr = [1,2,3,4,5];
+console.log('hello world");
+</code></pre>
+
+<p>arr的引用次数为1，尽管后面不再使用arr了，但是它还会持续占用内存，所以一般要这样处理</p>
+<pre><code>
+const arr = [1,2,3,4,5];
+console.log('hello world");
+arr = null;
+</code></pre>
+
+<p>让arr的指向为空，垃圾回收机制就会默认它的引用数为0而回收掉。</p>
+<h3 id="避免内存泄漏"><a href="#避免内存泄漏" class="headerlink" title="避免内存泄漏"></a>避免内存泄漏</h3><blockquote>
+<p>在局部作用域中，等函数执行完毕，变量就没有存在的必要了，js垃圾回收机制很快做出判断并且回收，但是对于全局变量，很难判断什么时候不用，所以，经验之谈就是，尽量少使用全局变量。<br>我们在使用闭包的时候，就会造成严重的内存泄漏，因为闭包的原因，局部变量会一直保存在内存中，所以在使用闭包的时候，要多加小心。</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/05/01/JS进阶系列之内存空间/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/30/JS进阶系列之this/" class="archive-article-date">
-  	<time datetime="2017-04-30T08:02:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-30</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/30/JS进阶系列之this/">JS进阶系列之this</a>
-    </h1>
+  
+    <a href="/2017/04/30/JS进阶系列之this/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS进阶系列之this</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/29/JS进阶系列之原型、原型链/" class="archive-article-date">
-  	<time datetime="2017-04-29T06:57:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/29/JS进阶系列之原型、原型链/">JS进阶系列之原型、原型链</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -272,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
