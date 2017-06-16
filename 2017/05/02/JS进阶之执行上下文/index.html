@@ -6,14 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/5 | Hexo</title>
+  <title>JS进阶之执行上下文 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/05/index.html">
+  <meta name="description" content="function test(){     console.log(a);//undefined;     var a = 1;}test();  也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是执行上下文的概念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS进阶之执行上下文">
+<meta property="og:url" content="http://yoursite.com/2017/05/02/JS进阶之执行上下文/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="function test(){     console.log(a);//undefined;     var a = 1;}test();  也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是执行上下文的概念。">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1497618154&di=5f74bfe5b923ca59027f72eaaf689437&src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-cdb1fa08a10a66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-42d6c06ba1f19f3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-e1b536b67b303b79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-06-16T13:08:44.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="JS进阶之执行上下文">
+<meta name="twitter:description" content="function test(){     console.log(a);//undefined;     var a = 1;}test();  也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是执行上下文的概念。">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1497618154&di=5f74bfe5b923ca59027f72eaaf689437&src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -153,76 +162,194 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-JS进阶之执行上下文" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JS进阶之执行上下文
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/02/JS进阶之执行上下文/" class="archive-article-date">
+
+        
+        <a href="/2017/05/02/JS进阶之执行上下文/" class="archive-article-date">
   	<time datetime="2017-05-02T12:59:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/02/JS进阶之执行上下文/">JS进阶之执行上下文</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b10000_10000&amp;sec=1497618154&amp;di=5f74bfe5b923ca59027f72eaaf689437&amp;src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg" alt=""></p>
+<p><pre><code><br>function test(){<br>     console.log(a);//undefined;<br>     var a = 1;<br>}<br>test();<br></code></pre></p>
+<blockquote>
+<p>也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是<strong>执行上下文</strong>的概念。 <a id="more"></a></p>
+</blockquote>
+<h3 id="什么是执行上下文？"><a href="#什么是执行上下文？" class="headerlink" title="什么是执行上下文？"></a>什么是执行上下文？</h3><blockquote>
+<p>当控制器转到可执行的代码时，会进入该代码对应的执行上下文，可以理解为该代码对应的一个执行环境，就叫做执行上下文。</p>
+</blockquote>
+<p>在JavaScript中运行环境有三种，分别是：</p>
+<ul>
+<li>全局环境：JavaScript代码执行起来，首先就是进入全局环境。</li>
+<li>函数环境：当函数被调用执行时，就会进入函数中执行。</li>
+<li>eval</li>
+</ul>
+<p>所以在一个JavaScript程序中，就会产生多个不同的执行上下文，这时候就需要用到前面提到的<strong>栈</strong>数据结构来管理了，我们称之为<strong>调用栈</strong>。当代码在执行过程中，遇到上面说的三种情况，就会产生三种执行上下文，然后分别压入调用栈中，等一个执行上下文执行完毕，弹出栈，才能执行下一个执行上下文中的代码，这就是栈结构的特点。</p>
+<h3 id="执行上下文的特点"><a href="#执行上下文的特点" class="headerlink" title="执行上下文的特点"></a>执行上下文的特点</h3><ul>
+<li>单线程，其实javascript就是单线程，所以很好理解。</li>
+<li>同步执行，同步就是按顺序，不能同时执行。</li>
+<li>全局上下文只有一个，它在浏览器关闭时才会弹出栈。</li>
+<li>函数的执行上下文的数目没有限制。</li>
+<li>每次某个函数被调用时，就会有新的执行上下文，即使是调用的自身函数。</li>
+</ul>
+<hr>
+<p><pre><code><br>demo01<br>function f1(){<br>     var n = 999;<br>     function f2(){<br>         alert(n);<br>    }<br>    return f2;<br>}<br>var result = f1();<br>result();//999<br></code></pre><br>我以上面这样一个例子讲解，<strong>执行上下文</strong>在<strong>调用栈</strong>中的创建过程</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/4067575-cdb1fa08a10a66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="执行上下文的生命周期"><a href="#执行上下文的生命周期" class="headerlink" title="执行上下文的生命周期"></a>执行上下文的生命周期</h3><p><img src="http://upload-images.jianshu.io/upload_images/4067575-42d6c06ba1f19f3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如图所示，主要分为两个阶段，一个是<strong>创建阶段</strong>,一个是<strong>执行阶段</strong>。</p>
+<h5 id="创建阶段："><a href="#创建阶段：" class="headerlink" title="创建阶段："></a>创建阶段：</h5><ul>
+<li>生成变量对象，后面会讲解</li>
+<li>建立作用域链</li>
+<li>确定this指向</li>
+</ul>
+<h5 id="执行阶段："><a href="#执行阶段：" class="headerlink" title="执行阶段："></a>执行阶段：</h5><ul>
+<li>变量赋值</li>
+<li>函数引用</li>
+<li>执行其他代码</li>
+</ul>
+<h5 id="执行完毕后弹栈，等待回收"><a href="#执行完毕后弹栈，等待回收" class="headerlink" title="执行完毕后弹栈，等待回收"></a>执行完毕后弹栈，等待回收</h5><blockquote>
+<p>变量对象和活动对象的区别就在于，执行周期不一样，在创建阶段叫做变量对象，在执行阶段叫做活动对象。</p>
+</blockquote>
+<h3 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h3><p><img src="http://upload-images.jianshu.io/upload_images/4067575-e1b536b67b303b79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>变量对象的创建主要有三个阶段：</p>
+<ul>
+<li>1、创建arguments对象。</li>
+<li>2、检查function函数声明创建属性。在VO对象中以函数名建立一个属性，属性值为函数的地址。如果函数名的属性已经存在了，那么该属性将会被新的引用所覆盖。</li>
+<li>3、检查var变量声明创建属性。在VO对象中以变量名建立一个属性，属性值为<strong>undefined</strong>。为了防止同名的属性值会被修改为<strong>undefined</strong>，则会直接跳过，原属性值不会被修改。</li>
+</ul>
+<hr>
+<p>举个变量提升和函数提升的例子，就明白了</p>
+<p><pre><code><br>demo02<br>function test(){<br>      console.log(a);<br>      console.log(foo());<br>      var a = 1;<br>      function foo(){<br>             return 2;<br>     }<br>}<br>test();<br></code></pre><br>这是一个典型的变量提升和函数提升的例子，最后会输出<strong>undefined和2</strong>,接下来以执行上下文的生命周期来讲解，</p>
+<h5 id="创建过程"><a href="#创建过程" class="headerlink" title="创建过程"></a>创建过程</h5><p><pre><code><br>testEC = {<br>      VO:{},<br>      scopeChain:{},<br>      this:{}<br>}<br>VO = {<br>     arguments:{},<br>     foo:<foo reference="">,<br>     a:undefined<br>}<br></foo></code></pre></p>
+<h5 id="执行阶段"><a href="#执行阶段" class="headerlink" title="执行阶段"></a>执行阶段</h5><p><pre><code><br>VO-&gt;AO<br>AO={<br>      arguments:{},<br>     foo:<foo reference="">,<br>     a:2<br>}<br></foo></code></pre></p>
+<h5 id="等同于"><a href="#等同于" class="headerlink" title="等同于"></a>等同于</h5><p><pre><code><br>function test(){<br>      function foo(){<br>           return 2;<br>     }<br>     var a;<br>     console.log(a);<br>     console.log(foo());<br>     a = 1;<br>}<br>test();<br></code></pre></p>
+<blockquote>
+<p>通过上面知识的讲解，进一步了解到了变量提升和函数提升的底层原理，对后面知识的学习也做了铺垫。</p>
+</blockquote>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/05/02/JS进阶之执行上下文/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/01/JS进阶系列之内存空间/" class="archive-article-date">
-  	<time datetime="2017-05-01T08:39:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-01</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/01/JS进阶系列之内存空间/">JS进阶系列之内存空间</a>
-    </h1>
+  
+    <a href="/2017/05/01/JS进阶系列之内存空间/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS进阶系列之内存空间</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -245,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
