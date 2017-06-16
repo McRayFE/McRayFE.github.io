@@ -280,101 +280,10 @@
       
         <p><img src="http://img.htmleaf.com/1505/201505272034.jpg" alt=""></p>
 <blockquote>
-<p>在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。&lt;–!more–&gt;</p>
-</blockquote>
-<h3 id="一、全局执行"><a href="#一、全局执行" class="headerlink" title="一、全局执行"></a>一、全局执行</h3><p>全局执行又分为浏览器和node下的执行环境<br><br>1、浏览器<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">console.log(this);//window</div><div class="line">```&lt;/br&gt;</div><div class="line">2、node&lt;/br&gt;</div></pre></td></tr></table></figure></p>
-<p>console.log(this);//global<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">在浏览器器下全局执行的this指向window，而在node环境下全局执行的this指向global</div><div class="line"></div><div class="line">### 二、函数执行</div><div class="line">函数执行又分为纯粹的函数调用还有严格模式下的函数调用&lt;/br&gt;</div><div class="line">1、纯粹的函数调用&lt;/br&gt;</div><div class="line"></div><div class="line">	function test()&#123;</div><div class="line">	 console.log(this);</div><div class="line">	&#125;</div><div class="line">	test();//window</div><div class="line">&lt;/br&gt;</div><div class="line">2、严格模式下的函数调用&lt;/br&gt;</div><div class="line"></div><div class="line">	&apos;use strict&apos;</div><div class="line">	function test()&#123;</div><div class="line">	 console.log(this);</div><div class="line">	&#125;</div><div class="line">	test();//undefined</div><div class="line">&lt;/br&gt;</div><div class="line">纯粹的函数调用的时候，this默认在全局执行，所以指向window，但是在严格模式下，this指向```undefined</div></pre></td></tr></table></figure></p>
-<h3 id="三、作为对象的方法调用"><a href="#三、作为对象的方法调用" class="headerlink" title="三、作为对象的方法调用"></a>三、作为对象的方法调用</h3><p>当作为对象的方法调用的时候，this指向当前的对象</p>
-<pre><code> 
- var obj = {
-  name:'McRay';
-  foo:function(){
-    console.log(this.name);
-  }
-}
-obj.foo();//McRay
-</code></pre>
-我们还可以这样写
-<pre><code>
-function test(){
-  console.log(this.name);
-}
-var obj = {
-   name:'McRay';
-   foo:test;
-}
-obj.foo();//McRay
-</code></pre>
-对于函数test来说，函数名test是一个引用，```foo:test```这句话的作用就是让foo也指向test所指向的函数，所以它们调用的是同一个函数，所以this指向的是foo所在的对象。
-
-再来看一种情况，把对象的方法赋值给另一个变量，然后直接调用这个变量
-<pre><code>
-var obj = {
-     name:'McRay';
-     foo:function(){
-        console.log(this);
-     }
-}
-var test = obj.foo();
-test();//window
-}
-</code></pre>
-我们发现此时的this指向的是全局环境下的window，因为```obj.foo()```只是一个函数引用，让```test```等于这个引用，就与```obj```这个对象没有了关系了，所以当调用```test()```的时候，其实就是全局执行，this就指向window。
-
-上面的问题在平时的编程中也会遇到，其中比较经典的就是异步回调函数的调用，请看下面的例子
-<pre><code>
-var obj = {
-     name:'McRay';
-     foo:function(){
-          console.log(this);
-     },
-     foo2:function(){
-        console.log(this);//obj
-        setTimeout(this.foo,1000);//window
-    }
-};
-obj.foo2();
-</code></pre>
-
-<p>foo2()方法中的this第一次指向obj,但是为什么第二次this就指向window呢？道理其实和上一个问题一样，setTimeout函数的第一个参数的接受一个函数，好比如<code>fun=this.foo()</code>，所以相当于把<code>this.foo()</code>这个函数引用赋给了fun，已经摆脱了<code>obj</code>对象的关系了，所以相当于在全局环境下执行。</p>
-<p>解决方法是利用<strong>闭包</strong>的特性，代码如下</p>
-<pre><code>
-var obj  = {
-    name:'McRay';
-    foo:function(){
-        console.log(this);
-    }
-   foo2:function(){
-       console.log(this);
-       var that = this;
-       setTimeout(function(){
-          console.log(this);//window
-          console.log(that);//obj
-      },1000);
- }
-}
-obj.foo2();
-</code></pre>
-
-<h3 id="四、作为一个构造函数调用"><a href="#四、作为一个构造函数调用" class="headerlink" title="四、作为一个构造函数调用"></a>四、作为一个构造函数调用</h3><p>在之前的文章里面，我已经总结过，在调用构造函数(new)，创建一个对象的过程都发生了什么，这里简单回顾一下，主要以下几个步骤：</p>
-<ul>
-<li>1、创建一个空对象</li>
-<li>2、让这个空对象的原型指向构造函数的原型</li>
-<li>3、让构造函数中的this指向这个空对象</li>
-<li>4、返回这个新的对象<br>所以我们在实例化一个对象的过程中，其实就是将this指向该实例化出来的新对象。<br><br><pre><code>
-function Person(name){
-   this.name = name;
-   console.log(this);
-}
-var p = new Person('McRay');//p
-</code></pre>
-
-</li>
-</ul>
-<h3 id="五、箭头函数"><a href="#五、箭头函数" class="headerlink" title="五、箭头函数"></a>五、箭头函数</h3><p>ES6中新增加的箭头函数，让函数体内的this对象，指向的就是定义时的对象，拿之前的例子说明一下。</p>
-<p><pre><code><br>var obj = {<br>   name:’McRay’;<br>   foo:function(){<br>    console.log(this);<br>  }<br>  foo2:function(){<br>       console.log(this);obj<br>       setTimeout(()=&gt;{<br>           console.log(this);//obj<br>       }<br>  }<br>}<br>obj.foo2();<br></code></pre><br>当我们在setTimeout中使用箭头函数的时候，函数体中的this默认指向的就是定义这个这个函数时，所在的对象，就是obj</p>
-<h3 id="六、call、apply、bind"><a href="#六、call、apply、bind" class="headerlink" title="六、call、apply、bind"></a>六、call、apply、bind</h3><p>这三个方法的目的都是差不多，就是可以动态改变this的指向<br>1、call的第一个参数接受this指向的对象，然后是逐个传参<br>2、apply的第一个参数和call相同，不同的是后面传入的是参数数组<br>3、bind是将生成一个新的函数，将该函数的this指向我们规定的对象或者函数，并不会立即执行</p>
-
+<p>在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。
+        
+          <a class="article-more-a" href="/2017/04/30/JS进阶系列之this/#more">more >></a>
+        
       
 
       
