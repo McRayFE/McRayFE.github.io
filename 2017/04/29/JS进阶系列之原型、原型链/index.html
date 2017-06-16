@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JS进阶系列之原型、原型链 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在看&amp;lt;&amp;gt;这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
+  <meta name="description" content="最近在看JavaScript忍者秘籍这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之原型、原型链">
 <meta property="og:url" content="http://yoursite.com/2017/04/29/JS进阶系列之原型、原型链/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="最近在看&amp;lt;&amp;gt;这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
+<meta property="og:description" content="最近在看JavaScript忍者秘籍这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497607286351&di=84994c061accc3dc39b82fddbedbe405&imgtype=0&src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F8A%2F2C%2FwKiom1gpi9Oi34aUAAAg1IhWRco447.jpg-wh_651x-s_3763355036.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-b226b1f19a7f5077.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-4ea7bb3bfd4e5175.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T07:19:26.831Z">
+<meta property="og:updated_time" content="2017-06-16T07:25:53.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之原型、原型链">
-<meta name="twitter:description" content="最近在看&amp;lt;&amp;gt;这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
+<meta name="twitter:description" content="最近在看JavaScript忍者秘籍这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497607286351&di=84994c061accc3dc39b82fddbedbe405&imgtype=0&src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F8A%2F2C%2FwKiom1gpi9Oi34aUAAAg1IhWRco447.jpg-wh_651x-s_3763355036.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -183,9 +183,9 @@
       
         <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1497607286351&amp;di=84994c061accc3dc39b82fddbedbe405&amp;imgtype=0&amp;src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F8A%2F2C%2FwKiom1gpi9Oi34aUAAAg1IhWRco447.jpg-wh_651x-s_3763355036.jpg" alt=""></p>
 <blockquote>
-<p>最近在看&lt;<javascript忍者秘籍>&gt;这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法 <a id="more"></a></javascript忍者秘籍></p>
+<p>最近在看<code>JavaScript忍者秘籍</code>这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法 <a id="more"></a></p>
 </blockquote>
-<p>###什么是原型<br>提到原型，我们可能都会想到与对象有关的东西，但其实，原型是与函数才是密切相关的。每当我们创建一个函数，都会有一个指向该函数的<strong>原型对象</strong>的指针<code>prototype</code>，然后该原型对象上又有一个指向该函数的指针<code>constructor</code>，在这里，如果我们这个函数是一个构造函数，那么我们每实例化一个对象，该对象都会有一个指向该构造函数的原型对象的指针<code>_proto_</code>，那么我就以一个小的例子来讲解一下原型对象，构造函数与实例的关系。</p>
+<h3 id="什么是原型"><a href="#什么是原型" class="headerlink" title="什么是原型"></a>什么是原型</h3><p>提到原型，我们可能都会想到与对象有关的东西，但其实，原型是与函数才是密切相关的。每当我们创建一个函数，都会有一个指向该函数的<strong>原型对象</strong>的指针<code>prototype</code>，然后该原型对象上又有一个指向该函数的指针<code>constructor</code>，在这里，如果我们这个函数是一个构造函数，那么我们每实例化一个对象，该对象都会有一个指向该构造函数的原型对象的指针<code>_proto_</code>，那么我就以一个小的例子来讲解一下原型对象，构造函数与实例的关系。</p>
 <pre><code>function Ninja(){
      this.swung = true;
      this.swingSword = function(){
@@ -203,7 +203,7 @@ var ninja = new Ninja();
 <ul>
 <li><p>如果给对象实例添加了一个与原型对象中的某个同名属性，该对象实例上的这个属性会覆盖原型对象上的属性，我们可以通过代码来演示：</p>
 <p>  function Ninja(){</p>
-<pre><code>   this.swung = true;
+<pre><code>this.swung = true;
 this.swingSword = function(){
     return !this.swung;
 }
@@ -212,23 +212,23 @@ this.swingSword = function(){
 </code></pre><p>  };<br>  var ninja = new Ninja();<br>  ninja.swingSword();//false</p>
 </li>
 </ul>
-<p>因为每次访问实例中的属性是，都是一个向上查找的过程，会先从实例对象上查找有无这个属性，如果有，就返回这个属性，如果没有，就会继续往它的原型对象上找，一层层往上寻找，如果没有，就返回undefined。</p>
+<p>因为每次访问实例中的属性是，都是一个向上查找的过程，会先从实例对象上查找有无这个属性，如果有，就返回这个属性，如果没有，就会继续往它的原型对象上找，一层层往上寻找，如果没有，就返回<code>undefined</code>。</p>
 <ul>
 <li><p>如果我们先实例化了一个对象实例，然后再改变了它的原型对象，这个改变会反映在这个对象实例上，因为原型对象上的改变会实时反应在每一个对象实例上，这也是原型对象的重要特性之一，代码演示实例如下：</p>
 <pre><code>function Ninja(){
-    this.swung = true;
+  this.swung = true;
 }
 Ninja.prototype.swingSword = function(){
-    return this.swung;
+  return this.swung;
 };
 var ninja = new Ninja();
 Ninja,prototype.swingSword = function(){
-    return !this.swung;
+  return !this.swung;
 }
 ninja.swingSword();//false;
 </code></pre></li>
 </ul>
-<p>###什么是原型链<br>原型链与javascript中的继承密切相关，可以说，继承是通过原型链来实现的。原型链可以理解为<strong>一个对象的实例是另一个对象的原型，然后另一个对象的实例又是另一个对象的原型，依次类推形成的一个链式结构</strong><br>所以一般实现继承的方式是：<strong><em>将父类的实例作为子类的原型</em></strong>，用下面这个例子来讲解一下</p>
+<h3 id="什么是原型链"><a href="#什么是原型链" class="headerlink" title="什么是原型链"></a>什么是原型链</h3><p>原型链与javascript中的继承密切相关，可以说，继承是通过原型链来实现的。原型链可以理解为<strong>一个对象的实例是另一个对象的原型，然后另一个对象的实例又是另一个对象的原型，依次类推形成的一个链式结构</strong><br>所以一般实现继承的方式是：<strong><em>将父类的实例作为子类的原型</em></strong>，用下面这个例子来讲解一下</p>
 <pre><code>function Person(){};
 Person.prototype.dance = function(){};
 function Ninja(){};
