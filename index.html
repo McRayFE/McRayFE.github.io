@@ -296,13 +296,19 @@ var ninja = new Ninja();
 </code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4067575-b226b1f19a7f5077.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>从图中可以看出，通过构造函数<code>Ninja()</code>创建了一个对象，并且这个对象的引用是一个变量<code>ninja</code>，然后该构造函数，又有一个指向它的原型对象的属性<code>prototype</code>。</p>
 <hr>
-<p>谈到原型，接下来就是原型对象的几个知识点。</p>
-<ul>
-<li><p>如果给对象实例添加了一个与原型对象中的某个同名属性，该对象实例上的这个属性会覆盖原型对象上的属性，我们可以通过代码来演示：</p>
-<p>  function Ninja(){<br>  this.swung = true;<br>  this.swingSword = function(){<br>   return !this.swung;<br>  }<br>  }<br>  Ninja.prototype.swingSword = function(){<br>   return this.swung;<br>  };<br>  var ninja = new Ninja();<br>  ninja.swingSword();//false</p>
-</li>
-</ul>
-<p>因为每次访问实例中的属性是，都是一个向上查找的过程，会先从实例对象上查找有无这个属性，如果有，就返回这个属性，如果没有，就会继续往它的原型对象上找，一层层往上寻找，如果没有，就返回undefined。</p>
+<p>谈到原型，接下来就是原型对象的几个知识点。<br>如果给对象实例添加了一个与原型对象中的某个同名属性，该对象实例上的这个属性会覆盖原型对象上的属性，我们可以通过代码来演示：</p>
+<pre><code>function Ninja(){
+this.swung = true;
+this.swingSword = function(){
+ return !this.swung;
+}
+}
+Ninja.prototype.swingSword = function(){
+ return this.swung;
+};
+var ninja = new Ninja();
+ninja.swingSword();//false
+</code></pre><p>因为每次访问实例中的属性是，都是一个向上查找的过程，会先从实例对象上查找有无这个属性，如果有，就返回这个属性，如果没有，就会继续往它的原型对象上找，一层层往上寻找，如果没有，就返回undefined。</p>
 <p>如果我们先实例化了一个对象实例，然后再改变了它的原型对象，这个改变会反映在这个对象实例上，因为原型对象上的改变会实时反应在每一个对象实例上，这也是原型对象的重要特性之一，代码演示实例如下：</p>
 <pre><code>function Ninja(){
  this.swung = true;
