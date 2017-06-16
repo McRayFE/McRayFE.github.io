@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。">
 <meta property="og:image" content="http://img.htmleaf.com/1505/201505272034.jpg">
-<meta property="og:updated_time" content="2017-06-16T08:20:11.085Z">
+<meta property="og:updated_time" content="2017-06-16T08:26:31.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之this">
 <meta name="twitter:description" content="在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。">
@@ -262,7 +262,8 @@ obj.foo2();
 <li>1、创建一个空对象</li>
 <li>2、让这个空对象的原型指向构造函数的原型</li>
 <li>3、让构造函数中的this指向这个空对象</li>
-<li>4、返回这个新的对象<br>所以我们在实例化一个对象的过程中，其实就是将this指向该实例化出来的新对象。<br><br><pre><code>
+<li>4、返回这个新的对象<!--haha-->
+所以我们在实例化一个对象的过程中，其实就是将this指向该实例化出来的新对象。<pre><code>
 function Person(name){
    this.name = name;
    console.log(this);
