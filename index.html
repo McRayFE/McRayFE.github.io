@@ -258,6 +258,149 @@
 
 
   
+    <article id="post-JS进阶系列之this" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/30/JS进阶系列之this/">JS进阶系列之this</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/30/JS进阶系列之this/" class="archive-article-date">
+  	<time datetime="2017-04-30T08:02:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://img.htmleaf.com/1505/201505272034.jpg" alt=""></p>
+<blockquote>
+<p>在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。&lt;–more–&gt;</p>
+</blockquote>
+<h3 id="一、全局执行"><a href="#一、全局执行" class="headerlink" title="一、全局执行"></a>一、全局执行</h3><p>全局执行又分为浏览器和node下的执行环境<br><br>1、浏览器<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">console.log(this);//window</div><div class="line">```&lt;/br&gt;</div><div class="line">2、node&lt;/br&gt;</div></pre></td></tr></table></figure></p>
+<p>console.log(this);//global<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">在浏览器器下全局执行的this指向window，而在node环境下全局执行的this指向global</div><div class="line"></div><div class="line">### 二、函数执行</div><div class="line">函数执行又分为纯粹的函数调用还有严格模式下的函数调用&lt;/br&gt;</div><div class="line">1、纯粹的函数调用&lt;/br&gt;</div><div class="line"></div><div class="line">	function test()&#123;</div><div class="line">	 console.log(this);</div><div class="line">	&#125;</div><div class="line">	test();//window</div><div class="line">&lt;/br&gt;</div><div class="line">2、严格模式下的函数调用&lt;/br&gt;</div><div class="line"></div><div class="line">	&apos;use strict&apos;</div><div class="line">	function test()&#123;</div><div class="line">	 console.log(this);</div><div class="line">	&#125;</div><div class="line">	test();//undefined</div><div class="line">&lt;/br&gt;</div><div class="line">纯粹的函数调用的时候，this默认在全局执行，所以指向window，但是在严格模式下，this指向```undefined</div></pre></td></tr></table></figure></p>
+<h3 id="三、作为对象的方法调用"><a href="#三、作为对象的方法调用" class="headerlink" title="三、作为对象的方法调用"></a>三、作为对象的方法调用</h3><p>当作为对象的方法调用的时候，this指向当前的对象</p>
+<pre><code> 
+ var obj = {
+  name:'McRay';
+  foo:function(){
+    console.log(this.name);
+  }
+}
+obj.foo();//McRay
+</code></pre>
+我们还可以这样写
+<pre><code>
+function test(){
+  console.log(this.name);
+}
+var obj = {
+   name:'McRay';
+   foo:test;
+}
+obj.foo();//McRay
+</code></pre>
+对于函数test来说，函数名test是一个引用，```foo:test```这句话的作用就是让foo也指向test所指向的函数，所以它们调用的是同一个函数，所以this指向的是foo所在的对象。
+
+再来看一种情况，把对象的方法赋值给另一个变量，然后直接调用这个变量
+<pre><code>
+var obj = {
+     name:'McRay';
+     foo:function(){
+        console.log(this);
+     }
+}
+var test = obj.foo();
+test();//window
+}
+</code></pre>
+我们发现此时的this指向的是全局环境下的window，因为```obj.foo()```只是一个函数引用，让```test```等于这个引用，就与```obj```这个对象没有了关系了，所以当调用```test()```的时候，其实就是全局执行，this就指向window。
+
+上面的问题在平时的编程中也会遇到，其中比较经典的就是异步回调函数的调用，请看下面的例子
+<pre><code>
+var obj = {
+     name:'McRay';
+     foo:function(){
+          console.log(this);
+     },
+     foo2:function(){
+        console.log(this);//obj
+        setTimeout(this.foo,1000);//window
+    }
+};
+obj.foo2();
+</code></pre>
+
+<p>foo2()方法中的this第一次指向obj,但是为什么第二次this就指向window呢？道理其实和上一个问题一样，setTimeout函数的第一个参数的接受一个函数，好比如<code>fun=this.foo()</code>，所以相当于把<code>this.foo()</code>这个函数引用赋给了fun，已经摆脱了<code>obj</code>对象的关系了，所以相当于在全局环境下执行。</p>
+<p>解决方法是利用<strong>闭包</strong>的特性，代码如下</p>
+<pre><code>
+var obj  = {
+    name:'McRay';
+    foo:function(){
+        console.log(this);
+    }
+   foo2:function(){
+       console.log(this);
+       var that = this;
+       setTimeout(function(){
+          console.log(this);//window
+          console.log(that);//obj
+      },1000);
+ }
+}
+obj.foo2();
+</code></pre>
+
+<h3 id="四、作为一个构造函数调用"><a href="#四、作为一个构造函数调用" class="headerlink" title="四、作为一个构造函数调用"></a>四、作为一个构造函数调用</h3><p>在之前的文章里面，我已经总结过，在调用构造函数(new)，创建一个对象的过程都发生了什么，这里简单回顾一下，主要以下几个步骤：</p>
+<ul>
+<li>1、创建一个空对象</li>
+<li>2、让这个空对象的原型指向构造函数的原型</li>
+<li>3、让构造函数中的this指向这个空对象</li>
+<li>4、返回这个新的对象<br>所以我们在实例化一个对象的过程中，其实就是将this指向该实例化出来的新对象。<pre><code>
+function Person(name){
+   this.name = name;
+   console.log(this);
+}
+var p = new Person('McRay');//p
+</code></pre>
+
+</li>
+</ul>
+<h3 id="五、箭头函数"><a href="#五、箭头函数" class="headerlink" title="五、箭头函数"></a>五、箭头函数</h3><p>ES6中新增加的箭头函数，让函数体内的this对象，指向的就是定义时的对象，拿之前的例子说明一下。</p>
+<p><pre><code><br>var obj = {<br>   name:’McRay’;<br>   foo:function(){<br>    console.log(this);<br>  }<br>  foo2:function(){<br>       console.log(this);obj<br>       setTimeout(()=&gt;{<br>           console.log(this);//obj<br>       }<br>  }<br>}<br>obj.foo2();<br></code></pre><br>当我们在setTimeout中使用箭头函数的时候，函数体中的this默认指向的就是定义这个这个函数时，所在的对象，就是obj</p>
+<h3 id="六、call、apply、bind"><a href="#六、call、apply、bind" class="headerlink" title="六、call、apply、bind"></a>六、call、apply、bind</h3><p>这三个方法的目的都是差不多，就是可以动态改变this的指向<br>1、call的第一个参数接受this指向的对象，然后是逐个传参<br>2、apply的第一个参数和call相同，不同的是后面传入的是参数数组<br>3、bind是将生成一个新的函数，将该函数的this指向我们规定的对象或者函数，并不会立即执行</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/30/JS进阶系列之this/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-JS进阶系列之原型、原型链" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -280,56 +423,10 @@
       
         <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1497607286351&amp;di=84994c061accc3dc39b82fddbedbe405&amp;imgtype=0&amp;src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F8A%2F2C%2FwKiom1gpi9Oi34aUAAAg1IhWRco447.jpg-wh_651x-s_3763355036.jpg" alt=""></p>
 <blockquote>
-<p>最近在看<code>JavaScript忍者秘籍</code>这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法</p>
-</blockquote>
-<h3 id="什么是原型"><a href="#什么是原型" class="headerlink" title="什么是原型"></a>什么是原型</h3><p>提到原型，我们可能都会想到与对象有关的东西，但其实，原型是与函数才是密切相关的。每当我们创建一个函数，都会有一个指向该函数的<strong>原型对象</strong>的指针<code>prototype</code>，然后该原型对象上又有一个指向该函数的指针<code>constructor</code>，在这里，如果我们这个函数是一个构造函数，那么我们每实例化一个对象，该对象都会有一个指向该构造函数的原型对象的指针<code>_proto_</code>，那么我就以一个小的例子来讲解一下原型对象，构造函数与实例的关系。</p>
-<pre><code>function Ninja(){
- this.swung = true;
- this.swingSword = function(){
- return !this.swung;
-}
-}
-Ninja.prototype.swingSword = function(){
- return this.swung;
-};
-var ninja = new Ninja();
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4067575-b226b1f19a7f5077.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>从图中可以看出，通过构造函数<code>Ninja()</code>创建了一个对象，并且这个对象的引用是一个变量<code>ninja</code>，然后该构造函数，又有一个指向它的原型对象的属性<code>prototype</code>。</p>
-<hr>
-<p>谈到原型，接下来就是原型对象的几个知识点。<br>如果给对象实例添加了一个与原型对象中的某个同名属性，该对象实例上的这个属性会覆盖原型对象上的属性，我们可以通过代码来演示：</p>
-<pre><code>function Ninja(){
-this.swung = true;
-this.swingSword = function(){
- return !this.swung;
-}
-}
-Ninja.prototype.swingSword = function(){
- return this.swung;
-};
-var ninja = new Ninja();
-ninja.swingSword();//false
-</code></pre><p>因为每次访问实例中的属性是，都是一个向上查找的过程，会先从实例对象上查找有无这个属性，如果有，就返回这个属性，如果没有，就会继续往它的原型对象上找，一层层往上寻找，如果没有，就返回undefined。</p>
-<p>如果我们先实例化了一个对象实例，然后再改变了它的原型对象，这个改变会反映在这个对象实例上，因为原型对象上的改变会实时反应在每一个对象实例上，这也是原型对象的重要特性之一，代码演示实例如下：</p>
-<pre><code>function Ninja(){
- this.swung = true;
-}
-Ninja.prototype.swingSword = function(){
- return this.swung;
-};
-var ninja = new Ninja();
-Ninja,prototype.swingSword = function(){
- return !this.swung;
-}
-ninja.swingSword();//false;
-</code></pre><h3 id="什么是原型链"><a href="#什么是原型链" class="headerlink" title="什么是原型链"></a>什么是原型链</h3><p>原型链与javascript中的继承密切相关，可以说，继承是通过原型链来实现的。原型链可以理解为<strong>一个对象的实例是另一个对象的原型，然后另一个对象的实例又是另一个对象的原型，依次类推形成的一个链式结构</strong><br>所以一般实现继承的方式是：<strong><em>将父类的实例作为子类的原型</em></strong>，用下面这个例子来讲解一下</p>
-<pre><code>function Person(){};
-Person.prototype.dance = function(){};
-function Ninja(){};
-Ninja.prototype = new Person();
-var ninja = new Ninja();
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4067575-4ea7bb3bfd4e5175.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="捕获2.PNG"></p>
-<p>从图片可以看出，让<code>Person</code>的一个实例作为子类<code>Ninja</code>对象的原型，这样，Ninja就继承了Person上的所有属性和方法，包括构造函数上的还有原型上的，这就是原型链实现继承的方法。<br>那么为什么我们不直接将父类的原型对象直接赋给子类的原型对象呢，那是因为如果我们这样做的话，对子类原型对象的改变，将会直接影响到了父类中的原型对象，这是一个不可取的方法。</p>
-
+<p>最近在看<code>JavaScript忍者秘籍</code>这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法
+        
+          <a class="article-more-a" href="/2017/04/29/JS进阶系列之原型、原型链/#more">more >></a>
+        
       
 
       
