@@ -9,6 +9,7 @@
   <title>JS进阶系列之原型、原型链 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近在看JavaScript忍者秘籍这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之原型、原型链">
 <meta property="og:url" content="http://yoursite.com/2017/04/29/JS进阶系列之原型、原型链/index.html">
@@ -17,7 +18,7 @@
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497607286351&di=84994c061accc3dc39b82fddbedbe405&imgtype=0&src=http%3A%2F%2Fs1.51cto.com%2Fwyfs02%2FM00%2F8A%2F2C%2FwKiom1gpi9Oi34aUAAAg1IhWRco447.jpg-wh_651x-s_3763355036.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-b226b1f19a7f5077.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-4ea7bb3bfd4e5175.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T08:01:04.275Z">
+<meta property="og:updated_time" content="2017-06-16T13:35:33.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之原型、原型链">
 <meta name="twitter:description" content="最近在看JavaScript忍者秘籍这本书的时候，再加上最近遇到的关于原型、原型链的面试题，所以萌生了要把这些知识梳理一遍的想法，所以以下是我自己对原型、原型链的看法">
@@ -261,6 +262,17 @@ var ninja = new Ninja();
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -437,6 +449,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

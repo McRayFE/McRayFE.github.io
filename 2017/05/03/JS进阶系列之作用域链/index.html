@@ -9,6 +9,7 @@
   <title>JS进阶系列之作用域链 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之作用域链">
 <meta property="og:url" content="http://yoursite.com/2017/05/03/JS进阶系列之作用域链/index.html">
@@ -17,7 +18,7 @@
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497612399445&di=fe5b1684617ab5a704c0dde4239ad047&imgtype=0&src=http%3A%2F%2Fimg.bitscn.com%2Fupimg%2Fallimg%2Fc151116%2F144L63Z523440-115026.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-b51962eb7bb1d1c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-33e40aa0236cfa95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T13:30:57.282Z">
+<meta property="og:updated_time" content="2017-06-16T13:35:15.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之作用域链">
 <meta name="twitter:description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。">
@@ -248,6 +249,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -420,6 +432,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

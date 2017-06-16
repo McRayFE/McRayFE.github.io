@@ -9,6 +9,7 @@
   <title>JS进阶系列之内存空间 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之内存空间">
 <meta property="og:url" content="http://yoursite.com/2017/05/01/JS进阶系列之内存空间/index.html">
@@ -19,7 +20,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-b3404272eb2bafdb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-245cd7d0cdd5247c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-8d8188cdb5b0dbf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T12:54:31.418Z">
+<meta property="og:updated_time" content="2017-06-16T13:35:40.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之内存空间">
 <meta name="twitter:description" content="也许很多人像我一样，觉得JS有垃圾回收机制，内存就可以不管了，以至于在全局作用域下定义了很多变量，自以为JS会自动回收，直到最近，看了阮一峰老师，关于javascript内存泄漏的文章时，才发现自己写的代码，存在很严重的内存泄漏问题，再者，因为忽略对内存的学习，导致后面很多进阶概念很模糊，比如深复制与浅复制的区别，比如闭包、作用域链等等。">
@@ -279,6 +280,17 @@ arr = null;
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -460,6 +472,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

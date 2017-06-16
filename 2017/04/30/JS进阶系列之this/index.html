@@ -9,13 +9,14 @@
   <title>JS进阶系列之this | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之this">
 <meta property="og:url" content="http://yoursite.com/2017/04/30/JS进阶系列之this/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。">
 <meta property="og:image" content="http://img.htmleaf.com/1505/201505272034.jpg">
-<meta property="og:updated_time" content="2017-06-16T08:33:30.345Z">
+<meta property="og:updated_time" content="2017-06-16T13:35:54.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之this">
 <meta name="twitter:description" content="在javascript中，this的指向是在执行上下文的创建阶段确定的，其实只要知道不同执行方式下，this的指向分别是是什么，就能很好的掌握this这个让人摸不透的东西。">
@@ -317,6 +318,17 @@ var p = new Person('McRay');//p
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -498,6 +510,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
