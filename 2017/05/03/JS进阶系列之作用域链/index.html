@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JS进阶系列之作用域链 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。  JavaScript代码的执行过程在讲解作用域链之前，首先了解一下，JavaScript代码的执行过程，包括两个步骤：  编译阶段 JavaScript引擎执行阶段   在编译阶段主要做的是，经过编译器的编译，将代码转化为可执行的代码，其中就包括了作用域规则的">
+  <meta name="description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS进阶系列之作用域链">
 <meta property="og:url" content="http://yoursite.com/2017/05/03/JS进阶系列之作用域链/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。  JavaScript代码的执行过程在讲解作用域链之前，首先了解一下，JavaScript代码的执行过程，包括两个步骤：  编译阶段 JavaScript引擎执行阶段   在编译阶段主要做的是，经过编译器的编译，将代码转化为可执行的代码，其中就包括了作用域规则的">
+<meta property="og:description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497612399445&di=fe5b1684617ab5a704c0dde4239ad047&imgtype=0&src=http%3A%2F%2Fimg.bitscn.com%2Fupimg%2Fallimg%2Fc151116%2F144L63Z523440-115026.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-b51962eb7bb1d1c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-33e40aa0236cfa95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T13:26:03.500Z">
+<meta property="og:updated_time" content="2017-06-16T13:27:31.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶系列之作用域链">
-<meta name="twitter:description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。  JavaScript代码的执行过程在讲解作用域链之前，首先了解一下，JavaScript代码的执行过程，包括两个步骤：  编译阶段 JavaScript引擎执行阶段   在编译阶段主要做的是，经过编译器的编译，将代码转化为可执行的代码，其中就包括了作用域规则的">
+<meta name="twitter:description" content="在之前写的进阶系列里面，提到了执行上下文在创建阶段，要创建变量对象、确定作用域链还有确定this的指向，本次将重点讲解一下作用域链。">
 <meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497612399445&di=fe5b1684617ab5a704c0dde4239ad047&imgtype=0&src=http%3A%2F%2Fimg.bitscn.com%2Fupimg%2Fallimg%2Fc151116%2F144L63Z523440-115026.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -183,7 +183,7 @@
       
         <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1497612399445&amp;di=fe5b1684617ab5a704c0dde4239ad047&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.bitscn.com%2Fupimg%2Fallimg%2Fc151116%2F144L63Z523440-115026.jpg" alt=""></p>
 <blockquote>
-<p>在之前写的进阶系列里面，提到了<strong>执行上下文</strong>在创建阶段，要创建<strong>变量对象</strong>、<strong>确定作用域链</strong>还有<strong>确定this的指向</strong>，本次将重点讲解一下<strong>作用域链</strong>。</p>
+<p>在之前写的进阶系列里面，提到了<strong>执行上下文</strong>在创建阶段，要创建<strong>变量对象</strong>、<strong>确定作用域链</strong>还有<strong>确定this的指向</strong>，本次将重点讲解一下<strong>作用域链</strong>。<a id="more"></a></p>
 </blockquote>
 <h3 id="JavaScript代码的执行过程"><a href="#JavaScript代码的执行过程" class="headerlink" title="JavaScript代码的执行过程"></a>JavaScript代码的执行过程</h3><p>在讲解作用域链之前，首先了解一下，JavaScript代码的执行过程，包括两个步骤：</p>
 <ul>
