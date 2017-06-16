@@ -14,15 +14,14 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/02/JS进阶之执行上下文/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="function test(){     console.log(a);//undefined;     var a = 1;}test();  也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是执行上下文的概念。">
-<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1497618154&di=5f74bfe5b923ca59027f72eaaf689437&src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-cdb1fa08a10a66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-42d6c06ba1f19f3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4067575-e1b536b67b303b79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-16T13:08:44.278Z">
+<meta property="og:updated_time" content="2017-06-16T13:13:48.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS进阶之执行上下文">
 <meta name="twitter:description" content="function test(){     console.log(a);//undefined;     var a = 1;}test();  也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是执行上下文的概念。">
-<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1497618154&di=5f74bfe5b923ca59027f72eaaf689437&src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4067575-cdb1fa08a10a66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -182,8 +181,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b10000_10000&amp;sec=1497618154&amp;di=5f74bfe5b923ca59027f72eaaf689437&amp;src=http://static.open-open.com/lib/uploadImg/20160909/20160909152647_824.jpg" alt=""></p>
-<p><pre><code><br>function test(){<br>     console.log(a);//undefined;<br>     var a = 1;<br>}<br>test();<br></code></pre></p>
+        <p><pre><code><br>function test(){<br>     console.log(a);//undefined;<br>     var a = 1;<br>}<br>test();<br></code></pre></p>
 <blockquote>
 <p>也许你会遇到过上面这样的面试题，你只知道它考的是变量提升，但是具体的原理又知道吗？所以我觉得很有必要搞明白底层的原理，才能加深理解，其实围绕的就是<strong>执行上下文</strong>的概念。 <a id="more"></a></p>
 </blockquote>
